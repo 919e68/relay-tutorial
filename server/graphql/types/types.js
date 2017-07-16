@@ -1,21 +1,32 @@
-const graphql = require('graphql')
-const graphqlRelay = require('graphql-relay')
+import {
+  GraphQLID,
+  GraphQLString,
+  GraphQLObjectType
+} from 'graphql'
 
-const db = require('../../models/db')
-const { nodeField, nodeInterface } = require('./definitions')
+import {
+  globalIdField,
+  connectionArgs,
+  connectionFromArray,
+  connectionDefinitions
+} from 'graphql-relay'
 
-const User = new graphql.GraphQLObjectType({
+import { nodeField, nodeInterface } from './definitions'
+import db from '../../models/db'
+
+// = user type
+const User = new GraphQLObjectType({
   name: 'User',
   fields: () => ({
-    id: graphqlRelay.globalIdField('User'),
+    id: globalIdField('User'),
     username: {
-      type: graphql.GraphQLString,
+      type: GraphQLString,
       resolve: user => user.username
     },
     todos: {
       type: Todos,
       args: {
-        ...graphqlRelay.connectionArgs,
+        ...connectionArgs,
       },
       resolve: (user, { ...args }) => {
         return new Promise((resolve, reject) => {
@@ -25,7 +36,7 @@ const User = new graphql.GraphQLObjectType({
             },
             logging: false
           }).then(todos => {
-            resolve(graphqlRelay.connectionFromArray(todos, args))
+            resolve(connectionFromArray(todos, args))
           })
         })
       }
@@ -34,16 +45,16 @@ const User = new graphql.GraphQLObjectType({
   interfaces: [nodeInterface]
 })
 
+const Users = connectionDefinitions({ name: 'User', nodeType: User }).connectionType
 
-const Users = graphqlRelay.connectionDefinitions({ name: 'User', nodeType: User }).connectionType
 
-
-const Todo = new graphql.GraphQLObjectType({
+// = todo type
+const Todo = new GraphQLObjectType({
   name: 'Todo',
   fields: () => ({
-    id: graphqlRelay.globalIdField('Todo'),
+    id: globalIdField('Todo'),
     userId: {
-      type: graphql.GraphQLID,
+      type: GraphQLID,
       resolve: (todo) => todo.userId,
     },
     user: {
@@ -55,17 +66,16 @@ const Todo = new graphql.GraphQLObjectType({
       }
     },
     text: {
-      type: graphql.GraphQLString,
+      type: GraphQLString,
       resolve: (todo) => todo.text,
     }
   }),
   interfaces: [nodeInterface]
 })
 
+const Todos = connectionDefinitions({ name: 'Todo', nodeType: Todo }).connectionType
 
-const Todos = graphqlRelay.connectionDefinitions({ name: 'Todo', nodeType: Todo }).connectionType
-
-module.exports = {
+export {
   User,
   Users,
   Todo,

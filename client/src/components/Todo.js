@@ -1,0 +1,25 @@
+import React from 'react'
+
+import {
+  createFragmentContainer,
+  graphql,
+} from 'react-relay'
+
+class Todo extends React.Component {
+  render() {
+    return (
+      <div>
+        <h1>{this.props.todo.text}</h1>
+      </div>
+    )
+  }
+}
+
+export default createFragmentContainer(Todo, {
+  todo: graphql`
+    fragment Todo_todo on Todo {
+      id
+      text
+    }
+  `,
+})

@@ -1,10 +1,12 @@
-const graphql = require('graphql')
-const graphqlRelay = require('graphql-relay')
+import {
+  connectionArgs,
+  connectionFromArray
+} from 'graphql-relay'
 
-const db = require('../../models/db')
-const { User, Users } = require('../types/types')
+import db from '../../models/db'
+import { User, Users } from '../types/types'
 
-module.exports = {
+export default {
   Query: {
     user: {
       type: User,
@@ -20,14 +22,14 @@ module.exports = {
     users: {
       type: Users,
       args: {
-        ...graphqlRelay.connectionArgs,
+        ...connectionArgs,
       },
       resolve: (root, { ...args }) => {
         return new Promise((resolve, reject) => {
           db.User.findAll({
             logging: false
           }).then(users => {
-            resolve(graphqlRelay.connectionFromArray(users, args))
+            resolve(connectionFromArray(users, args))
           })
         })
       }

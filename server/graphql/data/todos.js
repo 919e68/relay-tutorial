@@ -1,10 +1,12 @@
-const graphql = require('graphql')
-const graphqlRelay = require('graphql-relay')
+import {
+  connectionArgs,
+  connectionFromArray
+} from 'graphql-relay'
 
-const db = require('../../models/db')
-const { Todo, Todos } = require('../types/types')
+import db from '../../models/db'
+import { Todo, Todos } from '../types/types'
 
-module.exports = {
+export default {
   Query: {
     todo: {
       type: Todo,
@@ -20,14 +22,14 @@ module.exports = {
     todos: {
       type: Todos,
       args: {
-        ...graphqlRelay.connectionArgs,
+        ...connectionArgs,
       },
       resolve: (root, { ...args }) => {
         return new Promise((resolve, reject) => {
           db.Todo.findAll({
             logging: false
           }).then(todos => {
-            resolve(graphqlRelay.connectionFromArray(todos, args))
+            resolve(connectionFromArray(todos, args))
           })
         })
       }

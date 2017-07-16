@@ -1,11 +1,14 @@
-const graphqlRelay = require('graphql-relay')
+import {
+  nodeDefinitions,
+  fromGlobalId
+} from 'graphql-relay'
 
-const db = require('../../models/db')
-const { User, Todo } = require('./types')
+import db from '../../models/db'
+import { User, Todo } from './types'
 
-const { nodeInterface, nodeField } = graphqlRelay.nodeDefinitions(
+const { nodeInterface, nodeField } = nodeDefinitions(
   (globalId) => {
-    const { type, id } = graphqlRelay.fromGlobalId(globalId)
+    const { type, id } = fromGlobalId(globalId)
 
     if (type === 'User') {
       return db.User.findById(id, { logging: false }).then(user => {
@@ -29,4 +32,4 @@ const { nodeInterface, nodeField } = graphqlRelay.nodeDefinitions(
   }
 )
 
-module.exports = { nodeInterface, nodeField }
+export { nodeInterface, nodeField }

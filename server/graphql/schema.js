@@ -1,13 +1,15 @@
-const graphql = require('graphql')
-const graphqlRelay = require('graphql-relay')
+import {
+  GraphQLSchema,
+  GraphQLObjectType
+} from 'graphql'
 
-const users = require('./data/users')
-const todos = require('./data/todos')
+import users from './data/users'
+import todos from './data/todos'
 
-const { nodeField } = require('./types/definitions')
+import { nodeField } from './types/definitions'
 
-module.exports = new graphql.GraphQLSchema({
-  query: new graphql.GraphQLObjectType({
+const Schema = new GraphQLSchema({
+  query: new GraphQLObjectType({
     name: 'Query',
     fields: {
       user: users.Query.user,
@@ -19,3 +21,5 @@ module.exports = new graphql.GraphQLSchema({
     }
   })
 })
+
+export default Schema

@@ -1,1 +1,5 @@
-const db = require('../server/models/db')
+let foo = { name: 'Wilson' }
+let bar = { ...foo }
+bar.name = 'Change'
+console.log(bar)
+console.log(foo)
