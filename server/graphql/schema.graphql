@@ -20,7 +20,7 @@ type PageInfo {
 }
 
 type Query {
-  user: User
+  user(id: ID): User
   users(after: String, first: Int, before: String, last: Int): UserConnection
   todo: Todo
   todos(after: String, first: Int, before: String, last: Int): TodoConnection
@@ -61,7 +61,11 @@ type TodoEdge {
 type User implements Node {
   # The ID of an object
   id: ID!
+  userId: ID
   username: String
+  email: String
+  firstName: String
+  lastName: String
   todos(after: String, first: Int, before: String, last: Int): TodoConnection
 }
 

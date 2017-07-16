@@ -3,6 +3,10 @@ import {
   connectionFromArray
 } from 'graphql-relay'
 
+import {
+  GraphQLID
+} from 'graphql'
+
 import db from '../../models/db'
 import { User, Users } from '../types/types'
 
@@ -10,7 +14,13 @@ export default {
   Query: {
     user: {
       type: User,
-      resolve: (root) => {
+      args: {
+        id: {
+          name: 'id',
+          type: GraphQLID
+        }
+      },
+      resolve: (root, { id }) => {
         return new Promise((resolve, reject) => {
           db.User.findOne({ logging: false }).then(user => {
             resolve(user)

@@ -28,6 +28,7 @@
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-relay": "^1.1.0",
+    "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",
     "relay-runtime": "^1.1.0",
     "sequelize": "^4.3.2",

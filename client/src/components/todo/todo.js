@@ -9,7 +9,7 @@ class Todo extends React.Component {
   render() {
     return (
       <div>
-        <h1>{this.props.todo.text}</h1>
+        <h1>todo</h1>
       </div>
     )
   }
@@ -17,7 +17,7 @@ class Todo extends React.Component {
 
 export default createFragmentContainer(Todo, {
   todo: graphql`
-    fragment Todo_todo on Todo {
+    fragment todo_todo on Todo {
       id
       text
     }

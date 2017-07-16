@@ -2,59 +2,19 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 
 import {
-  QueryRenderer,
-  graphql,
-} from 'react-relay'
-import {
-  Environment,
-  Network,
-  RecordSource,
-  Store,
-} from 'relay-runtime'
+  BrowserRouter as Router,
+  Route,
+  Switch
+} from 'react-router-dom'
 
-import Todo from './components/Todo'
+import TodoApp from './components/apps/todo-app'
+import ViewUser from './components/apps/view-user'
 
-function fetchQuery(
-  operation,
-  variables,
-) {
-  return fetch('/graphql', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      query: operation.text,
-      variables,
-    }),
-  }).then(response => {
-    return response.json()
-  })
-}
-
-const modernEnvironment = new Environment({
-  network: Network.create(fetchQuery),
-  store: new Store(new RecordSource()),
-})
-
-ReactDOM.render(
-  <QueryRenderer
-    environment={modernEnvironment}
-    query={graphql`
-      query appQuery {
-        todo {
-          ...Todo_todo
-        }
-      }
-    `}
-    variables={{}}
-    render={({error, props}) => {
-      if (props) {
-        return <Todo todo={props.todo}/>
-      } else {
-        return <div>Loading</div>
-      }
-    }}
-  />,
-  document.getElementById('app')
-)
+ReactDOM.render((
+  <Router>
+    <Switch>
+      <Route exact path='/' component={TodoApp} />
+      <Route path='/user/:id' component={ViewUser} />
+    </Switch>
+  </Router>
+), document.getElementById('app'))
