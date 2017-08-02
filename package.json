@@ -12,6 +12,7 @@
     "relay": "relay-compiler --src ./client/src/ --schema ./server/graphql/schema.graphql",
     "update:schema": "babel-node ./scripts/update-schema.js",
     "prod": "NODE_ENV=production webpack -p --config webpack.production.config.js",
+    "generate": "rc-autocomplete",
     "test": "babel-node ./test/index.js"
   },
   "author": "",

@@ -1,7 +1,6 @@
 module.exports = {
-  up: function (queryInterface, Sequelize) {
-    return queryInterface.bulkInsert('Users', [
-      {
+  up: function(queryInterface, Sequelize) {
+    return queryInterface.bulkInsert('Users', [{
         username: 'wilson',
         email: 'wilson@mail.com',
         password: 'abcabc',
@@ -18,7 +17,7 @@ module.exports = {
     ])
   },
 
-  down: function (queryInterface, Sequelize) {
+  down: function(queryInterface, Sequelize) {
 
   }
 };
