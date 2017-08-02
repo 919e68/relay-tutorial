@@ -4,5 +4,4 @@ sequelize migration:create --options-path ./server/config/sequelize.json
 
 
 for relay
-
 npm install relay-runtime
