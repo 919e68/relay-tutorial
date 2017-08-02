@@ -1,7 +1,14 @@
-sequelize init --options-path ./server/config/sequelize.json
-sequelize db:migrate --options-path ./server/config/sequelize.json
-sequelize migration:create --options-path ./server/config/sequelize.json
+How to setup
+```
+  npm install
+  npm install sequelize-cli babel-cli -g
+  setup server/config/database.json
+  create database
+  npm run db:migrate
+```
 
-
-for relay
-npm install relay-runtime
+How to start
+```
+  npm run update:schema
+  npm run relay
+```

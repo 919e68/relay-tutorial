@@ -1,7 +1,8 @@
 import {
   GraphQLID,
   GraphQLString,
-  GraphQLObjectType
+  GraphQLObjectType,
+  GraphQLInputObjectType
 } from 'graphql'
 
 import {
@@ -15,53 +16,73 @@ import { nodeField, nodeInterface } from './definitions'
 import db from '../../models/db'
 
 // = user type
-const User = new GraphQLObjectType({
-  name: 'User',
-  fields: () => ({
-    id: globalIdField('User'),
-    userId: {
-      type: GraphQLID,
-      resolve: user => user.id
-    },
-    username: {
-      type: GraphQLString,
-      resolve: user => user.username
-    },
-    email: {
-      type: GraphQLString,
-      resolve: user => user.email
-    },
-    firstName: {
-      type: GraphQLString,
-      resolve: user => user.firstName
-    },
-    lastName: {
-      type: GraphQLString,
-      resolve: user => user.lastName
-    },
-    todos: {
-      type: Todos,
-      args: {
-        ...connectionArgs,
+const User = {
+  Type: new GraphQLObjectType({
+    name: 'User',
+    fields: () => ({
+      id: globalIdField('User'),
+      userId: {
+        type: GraphQLID,
+        resolve: user => user.id
       },
-      resolve: (user, { ...args }) => {
-        return new Promise((resolve, reject) => {
-          db.Todo.findAll({
-            where: {
-              userId: user.id
-            },
-            logging: false
-          }).then(todos => {
-            resolve(connectionFromArray(todos, args))
+      username: {
+        type: GraphQLString,
+        resolve: user => user.username
+      },
+      email: {
+        type: GraphQLString,
+        resolve: user => user.email
+      },
+      firstName: {
+        type: GraphQLString,
+        resolve: user => user.firstName
+      },
+      lastName: {
+        type: GraphQLString,
+        resolve: user => user.lastName
+      },
+      todos: {
+        type: Todos,
+        args: {
+          ...connectionArgs,
+        },
+        resolve: (user, { ...args }) => {
+          return new Promise((resolve, reject) => {
+            db.Todo.findAll({
+              where: {
+                userId: user.id
+              },
+              logging: false
+            }).then(todos => {
+              resolve(connectionFromArray(todos, args))
+            })
           })
-        })
+        }
       }
-    }
+    }),
+    interfaces: [nodeInterface]
   }),
-  interfaces: [nodeInterface]
-})
 
-const Users = connectionDefinitions({ name: 'User', nodeType: User }).connectionType
+  Input: new GraphQLInputObjectType({
+    name: 'UserInput',
+    fields: () => ({
+      username: {
+        type: GraphQLString
+      },
+      email: {
+        type: GraphQLString
+      },
+      firstName: {
+        type: GraphQLString
+      },
+      lastName: {
+        type: GraphQLString
+      }
+    })
+  })
+}
+
+const Users = connectionDefinitions({ name: 'User', nodeType: User.Type }).connectionType
 
 
 // = todo type

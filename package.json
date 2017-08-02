@@ -6,10 +6,11 @@
   "scripts": {
     "dev": "nodemon ./server/index.js  --exec babel-node --presets es2015 react",
     "start": "babel-node ./server/index.js",
-    "db:migrate": "sequelize db:migrate --options-path ./server/config/sequelize.json",
-    "db:seed:all": "sequelize db:seed:all --options-path ./server/config/sequelize.json",
     "build:server": "babel ./server --out-dir ./build/server",
     "relay": "relay-compiler --src ./client/src/ --schema ./server/graphql/schema.graphql",
+    "db:migrate": "sequelize db:migrate --options-path ./server/config/sequelize.json",
+    "db:migrate:undo": "sequelize db:migrate --options-path ./server/config/sequelize.json",
+    "db:seed:all": "sequelize db:seed:all --options-path ./server/config/sequelize.json",
     "update:schema": "babel-node ./scripts/update-schema.js",
     "prod": "NODE_ENV=production webpack -p --config webpack.production.config.js",
     "generate": "rc-autocomplete",
