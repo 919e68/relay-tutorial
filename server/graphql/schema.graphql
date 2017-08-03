@@ -1,3 +1,17 @@
+input CreateUserInput {
+  username: String
+  clientMutationId: String
+}
+
+type CreateUserPayload {
+  user: User
+  clientMutationId: String
+}
+
+type Mutation {
+  createUser(input: CreateUserInput!): CreateUserPayload
+}
+
 # An object with an ID
 interface Node {
   # The id of the object.

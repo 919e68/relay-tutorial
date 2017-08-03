@@ -19,7 +19,16 @@ const Schema = new GraphQLSchema({
       todos: todos.Query.todos,
       node: nodeField
     }
+  }),
+
+  mutation: new GraphQLObjectType({
+    name: 'Mutation',
+    fields: {
+      createUser: users.Mutation.createUser
+    }
   })
+
+
 })
 
 export default Schema

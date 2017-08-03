@@ -5,7 +5,8 @@ import {
 } from 'graphql-relay'
 
 import {
-  GraphQLID
+  GraphQLID,
+  GraphQLString
 } from 'graphql'
 
 import db from '../../models/db'
@@ -14,7 +15,7 @@ import { User, Users } from '../types/types'
 export default {
   Query: {
     user: {
-      type: User,
+      type: User.Type,
       args: {
         id: {
           name: 'id',
@@ -51,36 +52,22 @@ export default {
     createUser: mutationWithClientMutationId({
       name: 'CreateUser',
       inputFields: {
-
+        username: {
+          type: GraphQLString
+        }
+      },
+      outputFields: {
+        user: {
+          type: User.Type
+        }
+      },
+      mutateAndGetPayload: () => {
+        return {
+          user: {
+            username: 'red'
+          }
+        }
       }
     })
   }
 }
-// 
-//
-// const GraphQLAddTodoMutation = mutationWithClientMutationId({
-//   name: 'AddTodo',
-//   inputFields: {
-//     text: { type: new GraphQLNonNull(GraphQLString) },
-//   },
-//   outputFields: {
-//     todoEdge: {
-//       type: GraphQLTodoEdge,
-//       resolve: ({localTodoId}) => {
-//         const todo = getTodo(localTodoId);
-//         return {
-//           cursor: cursorForObjectInConnection(getTodos(), todo),
-//           node: todo,
-//         };
-//       },
-//     },
-//     viewer: {
-//       type: GraphQLUser,
-//       resolve: () => getViewer(),
-//     },
-//   },
-//   mutateAndGetPayload: ({text}) => {
-//     const localTodoId = addTodo(text);
-//     return {localTodoId};
-//   },
-// });

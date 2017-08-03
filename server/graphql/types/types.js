@@ -95,7 +95,7 @@ const Todo = new GraphQLObjectType({
       resolve: (todo) => todo.userId,
     },
     user: {
-      type: User,
+      type: User.Type,
       resolve: (todo) => {
         return new new Promise((resolve, reject) => {
           resolve({ id: 99, username: 'wilson' })

@@ -8,7 +8,7 @@ import environment from '../../environment'
 import { ConnectionHandler } from 'relay-runtime'
 
 const mutation = graphql`
-  mutation CreateUserMutation($input: UserInput!) {
+  mutation CreateUserMutation($input: CreateUserInput!) {
     createUser(input: $input) {
       user {
         id
@@ -45,32 +45,32 @@ export default function CreatePostMutation(username, email, firstName, lastName,
       onError: err => console.error(err),
       optimisticUpdater: (proxyStore) => {
         // 1 - create the `newPost` as a mock that can be added to the store
-        const id = 'client:newUser:' + tempID++
-        const newUser = proxyStore.create(id, 'User')
-        newPost.setValue(id, 'id')
-        newPost.setValue(username, 'username')
-        newPost.setValue(email, 'email')
-        newPost.setValue(firstName, 'firstName')
-        newPost.setValue(lastName, 'lastName')
+        // const id = 'client:newUser:' + tempID++
+        // const newUser = proxyStore.create(id, 'User')
+        // newPost.setValue(id, 'id')
+        // newPost.setValue(username, 'username')
+        // newPost.setValue(email, 'email')
+        // newPost.setValue(firstName, 'firstName')
+        // newPost.setValue(lastName, 'lastName')
 
         // 2 - add `newPost` to the store
-        const viewerProxy = proxyStore.get(nodeId)
-        const connection = ConnectionHandler.getConnection(viewerProxy, 'list_users')
-        if (connection) {
-          ConnectionHandler.insertEdgeAfter(connection, newUser)
-        }
+        // const viewerProxy = proxyStore.get(nodeId)
+        // const connection = ConnectionHandler.getConnection(viewerProxy, 'list_users')
+        // if (connection) {
+          // ConnectionHandler.insertEdgeAfter(connection, newUser)
+        // }
       },
       updater: (proxyStore) => {
         // 1 - retrieve the `newPost` from the server response
-        const createUserField = proxyStore.getRootField('createUser')
-        const newUser = createPostField.getLinkedRecord('user')
+        // const createUserField = proxyStore.getRootField('createUser')
+        // const newUser = createPostField.getLinkedRecord('user')
 
         // 2 - add `newPost` to the store
-        const viewerProxy = proxyStore.get(nodeId)
-        const connection = ConnectionHandler.getConnection(viewerProxy, 'list_users')
-        if (connection) {
-          ConnectionHandler.insertEdgeAfter(connection, newUser)
-        }
+        // const viewerProxy = proxyStore.get(nodeId)
+        // const connection = ConnectionHandler.getConnection(viewerProxy, 'list_users')
+        // if (connection) {
+          // ConnectionHandler.insertEdgeAfter(connection, newUser)
+        // }
       },
     },
   )
