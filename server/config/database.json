@@ -2,20 +2,6 @@
   "development": {
     "username": "sa",
     "password": "ABC12abc",
-    "database": "sample_db_dev",
-    "host": "127.0.0.1",
-    "dialect": "mssql"
-  },
-  "test": {
-    "username": "sa",
-    "password": "ABC12abc",
-    "database": "sample_db_test",
-    "host": "127.0.0.1",
-    "dialect": "mssql"
-  },
-  "production": {
-    "username": "sa",
-    "password": "ABC12abc",
     "database": "sample_db",
     "host": "127.0.0.1",
     "dialect": "mssql"

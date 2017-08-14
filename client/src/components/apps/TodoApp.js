@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { QueryRenderer } from 'react-relay'
 
-import UsersQuery from '../../queries/users'
+import UsersQuery from '../../queries/user/UsersQuery'
 import environment from '../../config/environment'
 
-import UserList from '../user/list'
+import UserList from '../user/UserList'
 
 class TodoApp extends Component {
   render() {
@@ -17,7 +17,7 @@ class TodoApp extends Component {
             if (error) {
               return <div>{error.message}</div>
             } else if (props) {
-              return <UserList users={props.users} />
+              return <UserList viewer={props.viewer} />
             }
             return <div>Loading</div>
           }}

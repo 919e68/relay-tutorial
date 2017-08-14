@@ -4,7 +4,7 @@ import {
 } from 'graphql-relay'
 
 import db from '../../models/db'
-import { User, Todo } from './types'
+import { User, Todo, Viewer } from './types'
 
 const { nodeInterface, nodeField } = nodeDefinitions(
   (globalId) => {
@@ -18,6 +18,8 @@ const { nodeInterface, nodeField } = nodeDefinitions(
       return db.Todo.findById(id, { logging: false }).then(todo => {
         return todo
       })
+    } else if (type == 'Viewer') {
+      return { id: 'viewer' }
     }
 
     return null

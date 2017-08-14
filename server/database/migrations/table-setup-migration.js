@@ -12,24 +12,18 @@ module.exports = {
         },
         firstName: {
           type: Sequelize.STRING(100),
-          allowNull: false
         },
         lastName: {
           type: Sequelize.STRING(100),
-          allowNull: false
         },
         username: {
           type: Sequelize.STRING(50),
-          allowNull: false
         },
         password: {
           type: Sequelize.STRING(100),
-          allowNull: false
         },
         email: {
           type: Sequelize.STRING(100),
-          allowNull: false,
-          unique: true
         },
         createdAt: Sequelize.DATE,
         updatedAt: Sequelize.DATE

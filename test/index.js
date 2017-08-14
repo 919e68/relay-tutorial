@@ -1,5 +1,7 @@
-let foo = { name: 'Wilson' }
-let bar = { ...foo }
-bar.name = 'Change'
-console.log(bar)
-console.log(foo)
+import db from '../server/models/db'
+
+db.User.findAll({
+  logging: false
+}).then(users => {
+  console.log(JSON.stringify(users, null, 2))
+})

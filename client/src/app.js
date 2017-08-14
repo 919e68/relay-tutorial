@@ -7,8 +7,8 @@ import {
   Switch
 } from 'react-router-dom'
 
-import TodoApp from './components/apps/todo-app'
-import ViewUser from './components/apps/view-user'
+import TodoApp from './components/apps/TodoApp'
+import ViewUser from './components/apps/ViewUser'
 
 ReactDOM.render((
   <Router>

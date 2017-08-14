@@ -22,11 +22,11 @@ class User extends React.Component {
 
 export default createFragmentContainer(User, {
   user: graphql`
-    fragment user_user on User {
+    fragment User_user on User {
       id
       username
       todos {
-        ...list_todos
+        ...TodoList_todos
       }
     }
   `,

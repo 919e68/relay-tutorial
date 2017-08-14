@@ -13,10 +13,7 @@ const Schema = new GraphQLSchema({
     name: 'Query',
     fields: {
       user: users.Query.user,
-      users: users.Query.users,
-
-      todo: todos.Query.todo,
-      todos: todos.Query.todos,
+      viewer: users.Query.viewer,
       node: nodeField
     }
   }),

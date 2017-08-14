@@ -63,23 +63,20 @@ const User = {
     interfaces: [nodeInterface]
   }),
 
-  Input: new GraphQLInputObjectType({
-    name: 'UserInput',
-    fields: () => ({
-      username: {
-        type: GraphQLString
-      },
-      email: {
-        type: GraphQLString
-      },
-      firstName: {
-        type: GraphQLString
-      },
-      lastName: {
-        type: GraphQLString
-      }
-    })
-  })
+  Input: {
+    username: {
+      type: GraphQLString
+    },
+    email: {
+      type: GraphQLString
+    },
+    firstName: {
+      type: GraphQLString
+    },
+    lastName: {
+      type: GraphQLString
+    }
+  }
 }
 
 const Users = connectionDefinitions({ name: 'User', nodeType: User.Type }).connectionType

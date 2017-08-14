@@ -3,7 +3,7 @@ import {
   graphql,
 } from 'react-relay'
 
-import environment from '../../environment'
+import environment from '../../config/environment'
 
 import { ConnectionHandler } from 'relay-runtime'
 
@@ -23,15 +23,9 @@ const mutation = graphql`
 
 let tempID = 0
 
-export default function CreatePostMutation(username, email, firstName, lastName, nodeId, callback) {
+export default function CreatePostMutation(input, nodeId, callback) {
   const variables = {
-    input: {
-      username,
-      email,
-      firstName,
-      lastName,
-      clientMutationId: ""
-    },
+    input: input,
   }
   commitMutation(
     environment,
@@ -39,38 +33,30 @@ export default function CreatePostMutation(username, email, firstName, lastName,
       mutation,
       variables,
       onCompleted: (response) => {
-        console.log(response, environment)
-        callback()
+        callback(input)
       },
-      onError: err => console.error(err),
-      optimisticUpdater: (proxyStore) => {
-        // 1 - create the `newPost` as a mock that can be added to the store
-        // const id = 'client:newUser:' + tempID++
-        // const newUser = proxyStore.create(id, 'User')
-        // newPost.setValue(id, 'id')
-        // newPost.setValue(username, 'username')
-        // newPost.setValue(email, 'email')
-        // newPost.setValue(firstName, 'firstName')
-        // newPost.setValue(lastName, 'lastName')
+      updater: (store) => {
+        const payload = store.getRootField('createUser')
+        const newEdge = payload.getLinkedRecord('userEdge')
 
-        // 2 - add `newPost` to the store
-        // const viewerProxy = proxyStore.get(nodeId)
-        // const connection = ConnectionHandler.getConnection(viewerProxy, 'list_users')
-        // if (connection) {
-          // ConnectionHandler.insertEdgeAfter(connection, newUser)
-        // }
+        const proxy = store.get(nodeId)
+        const conn = ConnectionHandler.getConnection(proxy, 'UserList_users')
+        ConnectionHandler.insertEdgeAfter(conn, newEdge)
       },
-      updater: (proxyStore) => {
-        // 1 - retrieve the `newPost` from the server response
-        // const createUserField = proxyStore.getRootField('createUser')
-        // const newUser = createPostField.getLinkedRecord('user')
+      optimisticUpdater: (store) => {
+        const id = 'client:newUser:' + tempID++
+        const node = store.create(id, 'User')
+        node.setValue(input.username, 'username')
+        node.setValue(id, 'id')
+        const newEdge = store.create(
+          'client:newEdge:' + tempID++,
+          'UserEdge',
+        )
+        newEdge.setLinkedRecord(node, 'node')
 
-        // 2 - add `newPost` to the store
-        // const viewerProxy = proxyStore.get(nodeId)
-        // const connection = ConnectionHandler.getConnection(viewerProxy, 'list_users')
-        // if (connection) {
-          // ConnectionHandler.insertEdgeAfter(connection, newUser)
-        // }
+        const proxy = store.get(nodeId)
+        const conn = ConnectionHandler.getConnection(proxy, 'UserList_users')
+        ConnectionHandler.insertEdgeAfter(conn, newEdge)
       },
     },
   )

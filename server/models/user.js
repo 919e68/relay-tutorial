@@ -8,11 +8,9 @@ export default function(sequelize, DataTypes) {
     },
     firstName: {
       type: DataTypes.STRING(100),
-      allowNull: false
     },
     lastName: {
       type: DataTypes.STRING(100),
-      allowNull: false
     },
     username: {
       type: DataTypes.STRING(50),
@@ -20,12 +18,9 @@ export default function(sequelize, DataTypes) {
     },
     password: {
       type: DataTypes.STRING(100),
-      allowNull: false
     },
     email: {
-      type: DataTypes.STRING(100),
-      allowNull: false,
-      unique: true
+      type: DataTypes.STRING(100)
     },
     createdAt: {
       type: DataTypes.DATE,

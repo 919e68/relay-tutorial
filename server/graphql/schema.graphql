@@ -1,5 +1,8 @@
 input CreateUserInput {
   username: String
+  email: String
+  firstName: String
+  lastName: String
   clientMutationId: String
 }
 
@@ -35,9 +38,7 @@ type PageInfo {
 
 type Query {
   user(id: ID): User
-  users(after: String, first: Int, before: String, last: Int): UserConnection
-  todo: Todo
-  todos(after: String, first: Int, before: String, last: Int): TodoConnection
+  viewer: Viewer
 
   # Fetches an object given its ID
   node(
@@ -99,4 +100,9 @@ type UserEdge {
 
   # A cursor for use in pagination
   cursor: String!
+}
+
+type Viewer {
+  id: ID
+  users(after: String, first: Int, before: String, last: Int): UserConnection
 }

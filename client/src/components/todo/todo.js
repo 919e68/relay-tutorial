@@ -17,7 +17,7 @@ class Todo extends React.Component {
 
 export default createFragmentContainer(Todo, {
   todo: graphql`
-    fragment todo_todo on Todo {
+    fragment Todo_todo on Todo {
       id
       text
     }

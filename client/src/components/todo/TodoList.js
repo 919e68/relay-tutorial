@@ -5,25 +5,24 @@ import {
   graphql,
 } from 'react-relay'
 
-import Todo from './todo'
+import Todo from './Todo'
 
-class ListTodo extends React.Component {
+class TodoList extends React.Component {
   render() {
     return (
       <div>
-
         list todo
       </div>
     )
   }
 }
 
-export default createFragmentContainer(ListTodo, {
+export default createFragmentContainer(TodoList, {
   todos: graphql`
-    fragment list_todos on TodoConnection {
+    fragment TodoList_todos on TodoConnection {
       edges {
         node {
-          ...todo_todo
+          ...Todo_todo
         }
       }
     }
